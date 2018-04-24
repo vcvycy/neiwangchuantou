@@ -23,7 +23,7 @@ Server：作为TCP连接的中继
   1、与client交互
      监听端口(5010),接受Client的连接
      Attribute：
-         (1) clientConn  #dict类型,client["ClientName"]=ClientSocket，将ClientName映射到Socket
+         (1) clientConn  记录所有连接到服务器的client。#dict类型,client["ClientName"]=ClientSocket，将ClientName映射到Socket
          (2) 
      Method:
          (1) ConnVerify(socket) #TCP连接Socket身份验证，即询问ClientName(处理冲突情况),查询是否在conf.ini出现。
@@ -46,5 +46,7 @@ Server：作为TCP连接的中继
            #添加数据转发连接：加入establishedConn,并新建两条线程分别用于两个方向(connUser <-> connClient)数据转发
          (2)inactiveConn(eConnItem) #eConnItem为establishedConn的一项。将其status设置为0。(若对应的thread未结束，结束之)
          (3)ThreadFun(conn_1,conn_2,eConnItem): #从conn_1读取信息，发送给conn_2。若某条连接关闭，调用RemoveConn。
-
-
+Client
+   配置信息：本机需要中转的端口
+  连接服务器
+  Attribute:
